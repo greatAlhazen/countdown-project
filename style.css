@@ -22,6 +22,7 @@ body {
   line-height: 1.8;
 }
 
+/* video background */
 .video {
   position: absolute;
   top: 0;
@@ -39,6 +40,7 @@ body {
   object-fit: cover;
 }
 
+/* countdown-box  */
 .countdown-box {
   position: absolute;
   top: 50%;
@@ -49,18 +51,13 @@ body {
   background-color: rgba(255, 255, 255, 0.8);
 }
 
-h1 {
-  margin-top: 3rem;
-  text-align: center;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
 .form,
-.countdown__container {
+.countdown__container,
+.complete__container {
   padding: 3rem 5rem;
 }
 
+/* form */
 .form__box {
   margin-bottom: 2rem;
 }
@@ -73,6 +70,7 @@ h1 {
   outline: none;
 }
 
+/* list */
 .countdown__list {
   display: flex;
   align-items: center;
@@ -89,6 +87,48 @@ h1 {
   flex-direction: column;
 }
 
+/* complete */
+.complete__info {
+  text-align: center;
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+}
+
+/* text color animation with css */
+#element {
+  animation: title 4s infinite;
+}
+
+@keyframes title {
+  0% {
+    color: #46211a;
+  }
+
+  25% {
+    color: #0c2d48;
+  }
+
+  50% {
+    color: #2e4600;
+  }
+
+  75% {
+    color: #ffbb00;
+  }
+
+  100% {
+    color: #a2c523;
+  }
+}
+
+/* common values */
+h1 {
+  margin-top: 3rem;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 .btn {
   width: 100%;
   background-color: #0067b1;
@@ -102,6 +142,7 @@ h1 {
   color: #fff;
 }
 
+/* 420px */
 @media only screen and (max-width: 26.25em) {
   .countdown-box {
     width: 95vw;
