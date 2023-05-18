@@ -17,7 +17,6 @@ const countdownBtn = document.getElementById("reset-button");
 const timeElements = document.querySelectorAll("span");
 
 const complete = document.getElementById("complete");
-const completeTitle = document.getElementById("complete-title");
 const completeInfo = document.getElementById("complete-info");
 const completeButton = document.getElementById("complete-button");
 
@@ -39,22 +38,35 @@ dateElement.setAttribute("min", today);
 
 // update ui
 function updateDom() {
-  const now = new Date().getTime();
-  const distance = dateValue - now;
+  // start time
+  countdownActive = setInterval(() => {
+    const now = new Date().getTime();
+    const distance = dateValue - now;
 
-  const days = Math.floor(distance / day);
-  const hours = Math.floor((distance % day) / hour);
-  const minutes = Math.floor((distance % hour) / minute);
-  const seconds = Math.floor((distance % minute) / second);
+    // calculate remain time
+    const days = Math.floor(distance / day);
+    const hours = Math.floor((distance % day) / hour);
+    const minutes = Math.floor((distance % hour) / minute);
+    const seconds = Math.floor((distance % minute) / second);
 
-  formContainer.hidden = true;
+    formContainer.hidden = true;
 
-  countdownTitle.textContent = `${title}`;
-  timeElements[0].textContent = `${days}`;
-  timeElements[1].textContent = `${hours}`;
-  timeElements[2].textContent = `${minutes}`;
-  timeElements[3].textContent = `${seconds}`;
-  countdown.hidden = false;
+    // update ui according to remain time
+    if (distance < 0) {
+      countdown.hidden = true;
+      clearInterval(countdownActive);
+      completeInfo.textContent = `${title} finished on ${date}`;
+      complete.hidden = false;
+    } else {
+      countdownTitle.textContent = `${title}`;
+      timeElements[0].textContent = `${days}`;
+      timeElements[1].textContent = `${hours}`;
+      timeElements[2].textContent = `${minutes}`;
+      timeElements[3].textContent = `${seconds}`;
+      complete.hidden = true;
+      countdown.hidden = false;
+    }
+  }, second);
 }
 
 // submit functionality
@@ -63,9 +75,31 @@ function submitForm(e) {
   title = e.srcElement[0].value;
   date = e.srcElement[1].value;
 
-  dateValue = new Date(date).getTime();
-  updateDom();
+  if (date === "") {
+    alert("Please specify date");
+  } else {
+    dateValue = new Date(date).getTime();
+    updateDom();
+  }
+}
+
+// reset functionality
+function resetCountdown() {
+  formContainer.hidden = false;
+  countdown.hidden = true;
+
+  clearInterval(countdownActive);
+  title = "";
+  date = "";
+  localStorage.removeItem("countdown");
 }
 
 //submit event
 form.addEventListener("submit", submitForm);
+// reset button click event
+countdownBtn.addEventListener("click", resetCountdown);
+// back to form event
+completeButton.addEventListener("click", () => {
+  formContainer.hidden = false;
+  complete.hidden = true;
+});

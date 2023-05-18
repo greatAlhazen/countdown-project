@@ -92,6 +92,7 @@ body {
   text-align: center;
   font-size: 1.4rem;
   margin-bottom: 2rem;
+  text-transform: capitalize;
 }
 
 /* text color animation with css */
