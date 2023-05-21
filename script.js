@@ -75,6 +75,13 @@ function submitForm(e) {
   title = e.srcElement[0].value;
   date = e.srcElement[1].value;
 
+  savedCountdown = {
+    title,
+    date,
+  };
+
+  localStorage.setItem("countdown", JSON.stringify(savedCountdown));
+
   if (date === "") {
     alert("Please specify date");
   } else {
@@ -94,6 +101,18 @@ function resetCountdown() {
   localStorage.removeItem("countdown");
 }
 
+// restore countdown with local storage
+function restoreCountdown() {
+  if (localStorage.getItem("countdown")) {
+    formContainer.hidden = true;
+    savedCountdown = JSON.parse(localStorage.getItem("countdown"));
+
+    ({ title, date } = savedCountdown);
+    dateValue = new Date(date);
+    updateDom();
+  }
+}
+
 //submit event
 form.addEventListener("submit", submitForm);
 // reset button click event
@@ -103,3 +122,6 @@ completeButton.addEventListener("click", () => {
   formContainer.hidden = false;
   complete.hidden = true;
 });
+
+// call restore countdown
+restoreCountdown();
